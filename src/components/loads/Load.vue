@@ -27,17 +27,17 @@
               >
                 <v-icon class="mr-2">mdi-sort-descending</v-icon>List Organized Products
               </v-chip>
-              <v-btn
-                :to="{ name: 'order_products', params: { order_id: order.id, is_ordenated: false} }"
-              >
-                <v-icon class="mr-2">mdi-sort-ascending</v-icon>List Products
-              </v-btn>
             </template>
             <template v-else>
               <v-btn text @click="organizeOrder(order.id)">
                 <v-icon class="mr-2">mdi-sort-ascending</v-icon>Organize
               </v-btn>
             </template>
+            <v-btn
+              :to="{ name: 'order_products', params: { order_id: order.id, is_ordenated: false} }"
+            >
+              <v-icon class="mr-2">mdi-sort-ascending</v-icon>List Products
+            </v-btn>
           </th>
         </tr>
       </tbody>

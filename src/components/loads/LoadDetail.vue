@@ -5,6 +5,7 @@
       <thead>
         <tr>
           <th>Load ID</th>
+          <th>Order ID</th>
           <th>Code</th>
           <th>Bay</th>
           <th></th>
@@ -13,19 +14,22 @@
       <tbody>
         <tr v-for="order in orders" :key="order.id">
           <th>{{ order.load_id }}</th>
+          <th>{{ order.id }}</th>
           <th>{{ order.code }}</th>
           <th>{{ order.bay }}</th>
           <th>
             <template v-if="order.organized === true">
               <v-chip
-                :to="/orders/+order.id+'/organized'"
+                :to="{ name: 'order_products', params: { order_id: order.id, is_ordenated: true} }"
                 class="ma-2"
                 color="green"
                 text-color="white"
               >
                 <v-icon class="mr-2">mdi-sort-descending</v-icon>List Organized Products
               </v-chip>
-              <v-btn text :to="/orders/+order.id">
+              <v-btn
+                :to="{ name: 'order_products', params: { order_id: order.id, is_ordenated: false} }"
+              >
                 <v-icon class="mr-2">mdi-sort-ascending</v-icon>List Products
               </v-btn>
             </template>
@@ -57,15 +61,15 @@ export default {
   },
 
   methods: {
-    organizeOrder: function(id) {
-      this.$api.post("/order/" + id + "/organize").then(res => {
+    organizeOrder: function(order_id) {
+      this.$api.post("/order/" + order_id + "/organize").then(res => {
         console.log(res);
+        this.$router.push({
+          name: "order_products",
+          params: { order_id: order_id, is_ordenated: true }
+        });
       });
-      this.$router.push({ path: "/orders/" + id + "/ordenated" });
     }
   }
 };
 </script>
-
-<style>
-</style>

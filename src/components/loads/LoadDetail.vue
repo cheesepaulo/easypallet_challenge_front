@@ -25,8 +25,8 @@
               >
                 <v-icon class="mr-2">mdi-sort-descending</v-icon>List Organized Products
               </v-chip>
-              <v-btn text>
-                <v-icon class="mr-2">mdi-sort-ascending</v-icon>Product List
+              <v-btn text :to="/orders/+order.id">
+                <v-icon class="mr-2">mdi-sort-ascending</v-icon>List Products
               </v-btn>
             </template>
             <template v-else>

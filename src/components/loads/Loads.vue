@@ -1,10 +1,15 @@
 <template>
   <v-container class="mt-5">
-    <h3>List of Loads</h3>
+    <v-container fluid>
+      <v-row align="start" justify="space-between">
+        <h3>Listando Cargas</h3>
+        <router-link to="/loads/new" class>Nova Carga</router-link>
+      </v-row>
+    </v-container>
+
     <v-simple-table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Code</th>
           <th>Delivery Date</th>
           <th></th>
@@ -12,7 +17,6 @@
       </thead>
       <tbody>
         <tr v-for="load in loads" :key="load.id">
-          <th>{{ load.id }}</th>
           <th>{{ load.code }}</th>
           <th>{{ load.delivery_date }}</th>
           <th>
@@ -42,5 +46,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.no-loads {
+  color: #aaa;
+  font-size: 1.7rem;
+}
 </style>

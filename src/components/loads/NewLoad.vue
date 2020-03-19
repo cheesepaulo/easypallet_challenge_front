@@ -3,13 +3,13 @@
     <v-form>
       <v-row class="lg-12">
         <v-col class="lg-6">
-          <v-text-field v-model="load.code" @keydown.enter="add" label="Codigo" required></v-text-field>
+          <v-text-field v-model="load.code" label="Codigo" required></v-text-field>
         </v-col>
         <v-col class="lg-6">
           <VueCtkDateTimePicker v-model="load.delivery_date" />
         </v-col>
       </v-row>
-      <v-btn class="mr-4" @click="createLoad">submit</v-btn>
+      <v-btn class="mr-4" @click="createLoad()">submit</v-btn>
     </v-form>
   </v-container>
 </template>

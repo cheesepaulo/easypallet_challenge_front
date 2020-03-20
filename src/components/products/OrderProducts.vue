@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import PageTitle from "./layout/PageTitle";
+import PageTitle from "../layout/PageTitle";
 export default {
   components: { PageTitle },
   props: ["is_ordenated", "order_id", "order"],

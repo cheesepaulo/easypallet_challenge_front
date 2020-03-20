@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import PageTitle from "./layout/PageTitle";
+import PageTitle from "../layout/PageTitle";
 import { showError } from "@/global";
 
 export default {

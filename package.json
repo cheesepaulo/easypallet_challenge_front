@@ -14,9 +14,10 @@
     "express": "^4.17.1",
     "server-static": "^2.0.5",
     "vue": "^2.6.11",
-    "vue-ctk-date-time-picker": "^2.4.0",
     "vue-router": "^3.1.6",
-    "vuetify": "^2.2.11"
+    "vue-toasted": "^1.1.28",
+    "vuetify": "^2.2.11",
+    "vuetify-datetime-picker": "^2.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
@@ -43,7 +44,16 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": [
+        1,
+        {
+          "vars": "all",
+          "args": "after-used",
+          "ignoreRestSiblings": false
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

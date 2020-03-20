@@ -4,6 +4,7 @@
       <v-icon v-if="icon">{{ icon }}</v-icon>
       {{ title }}
     </h1>
+    <h2>{{ subtitle }}</h2>
     <v-divider />
   </div>
 </template>

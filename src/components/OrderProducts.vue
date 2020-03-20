@@ -1,6 +1,6 @@
 <template>
-  <v-container class="mt-5">
-    <h3>List of Products</h3>
+  <v-container fluid class="mt-5 pl-5 pr-5">
+    <PageTitle icon="mdi-package-variant-closed" :title="`Produtos da gravata: ${order.code} `" />
     <v-simple-table>
       <thead>
         <tr>
@@ -27,15 +27,19 @@
 </template>
 
 <script>
+import PageTitle from "./layout/PageTitle";
 export default {
+  components: { PageTitle },
+  props: ["is_ordenated", "order_id", "order"],
+
   data() {
     return {
       products: []
     };
   },
-  props: ["is_ordenated", "order_id"],
 
   created() {
+    console.log(this.order);
     if (this.is_ordenated === true) {
       this.$api.get("orders/" + this.order_id + "/ordenated").then(res => {
         console.log(this.order_id);

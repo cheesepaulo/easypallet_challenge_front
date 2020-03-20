@@ -1,6 +1,6 @@
 <template>
-  <v-container class="mt-5">
-    <h3>Orders of Load: {{ id }}</h3>
+  <v-container fluid class="mt-5 pl-5 pr-5">
+    <!-- <h3>Orders of Load: {{ id }}</h3> -->
     <v-simple-table>
       <thead>
         <tr>

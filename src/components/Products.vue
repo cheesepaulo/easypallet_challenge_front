@@ -1,0 +1,107 @@
+<template>
+  <v-container fluid class="pl-10 pr-10 pt-10">
+    <PageTitle icon="mdi-package" title="Produtos" />
+    <v-form ref="form">
+      <v-row>
+        <input id="product-id" type="hidden" v-model="product.id" />
+        <v-col cols="12" md="3" lg="2" sm="12" xs="12">
+          <v-text-field v-model="product.label" label="Nome do produto" />
+        </v-col>
+        <v-col cols="12" md="3" lg="2" sm="12" xs="12">
+          <v-text-field v-model="product.ballast" label="Lastro do produto" />
+        </v-col>
+        <v-col cols="12" md="4" lg="3" sm="12" xs="12">
+          <v-btn class="mr-4 primary mt-4" @click="save()">
+            <v-icon left>mdi-content-save</v-icon>Salvar
+          </v-btn>
+          <v-btn class="mr-4 default mt-4" @click="reset()">
+            <v-icon left>mdi-close</v-icon>Limpar
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+    <v-divider />
+    <v-data-table hide-default-footer disable-pagination :items="products" :headers="headers">
+      <template v-slot:item.actions="{ item }">
+        <v-btn icon color="warning" @click="getproduct(item)">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+  </v-container>
+</template>
+
+<script>
+import PageTitle from "./layout/PageTitle";
+import { showError } from "@/global";
+
+export default {
+  components: { PageTitle },
+  data() {
+    return {
+      dialog: false,
+      temp_product: {},
+      product: { label: "", ballast: "" },
+      products: [],
+      headers: [
+        { text: "Nome", value: "label" },
+        { text: "Lastro", value: "ballast" },
+        { text: "Ações", value: "actions", sortable: false }
+      ]
+    };
+  },
+
+  methods: {
+    getproducts() {
+      this.$api.get("/products").then(res => {
+        this.products = res.data;
+      });
+    },
+
+    getproduct(product) {
+      this.product = { ...product };
+    },
+
+    reset() {
+      this.$refs.form.reset();
+      this.product = { label: "", ballast: "" };
+    },
+
+    save() {
+      if (this.product.id) {
+        this.$api
+          .put(`/products/${this.product.id}`, this.product)
+          .then(() => {
+            this.$toasted.global.defaultSuccess();
+            this.getproducts();
+            this.reset();
+          })
+          .catch(showError, this.getproducts());
+      } else {
+        this.$api
+          .post(`/products`, this.product)
+          .then(() => {
+            this.$toasted.global.defaultSuccess();
+            this.getproducts();
+            this.reset();
+          })
+          .catch(showError, this.getproducts());
+      }
+    }
+  },
+
+  mounted() {
+    this.getproducts();
+  }
+};
+</script>
+
+<style scoped>
+tbody tr:nth-of-type(even) {
+  background-color: #fff;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: rgb(250, 250, 250);
+}
+</style>

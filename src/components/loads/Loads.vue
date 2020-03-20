@@ -47,6 +47,9 @@
     <v-divider />
     <v-data-table hide-default-footer disable-pagination :items="loads" :headers="headers">
       <template v-slot:item.actions="{ item }">
+        <v-btn icon :to="{ name: 'loadOrders', params: { id: item.id, load: item } }">
+          <v-icon left>mdi-newspaper-variant-multiple</v-icon>
+        </v-btn>
         <v-btn icon color="warning" @click="getLoad(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
@@ -75,6 +78,7 @@ export default {
       load: { code: "", delivery_date: "" },
       loads: [],
       headers: [
+        { text: "ID", value: "id" },
         { text: "Código", value: "code" },
         { text: "Data de Entrega", value: "delivery_date" },
         { text: "Ações", value: "actions", sortable: false }

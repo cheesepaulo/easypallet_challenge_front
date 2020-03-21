@@ -4,12 +4,12 @@
       <v-app-bar-nav-icon @click="toogle()" class="grey--text" />
       <v-toolbar-title class="headline text-uppercase mr-4">
         <span>Easy Pallet</span>
-        <span class="font-weight-light ml-2">/ Challenge</span>
+        <span class="font-weight-light ml-2">/ Desafio</span>
       </v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app>
-      <v-list>
+      <v-list class="mt-2">
         <v-subheader>Administração</v-subheader>
         <v-list-item-group>
           <v-list-item to="/loads">

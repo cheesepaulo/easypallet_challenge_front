@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mt-5 pl-5 pr-5">
+  <v-container fluid class="pl-10 pr-10 pt-5">
     <template v-if="is_ordenated">
       <PageTitle
         icon="mdi-package-variant-closed"
@@ -13,22 +13,18 @@
     <v-simple-table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Order ID</th>
-          <th>Product</th>
-          <th v-if="is_ordenated">Layer</th>
-          <th>Quantity</th>
-          <th>Ballast</th>
+          <th>Produto</th>
+          <th v-if="is_ordenated">Camada</th>
+          <th>Quantidade</th>
+          <th>Lastro</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in products" :key="product.id">
-          <th>{{ product.id }}</th>
-          <th>{{ product.order_id }}</th>
-          <th>{{ product.product_label }}</th>
-          <th v-if="is_ordenated">{{ product.layer }}</th>
-          <th>{{ product.quantity }}</th>
-          <th>{{ product.ballast }}</th>
+          <td>{{ product.product_label }}</td>
+          <td v-if="is_ordenated">{{ product.layer }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.ballast }}</td>
         </tr>
       </tbody>
     </v-simple-table>
@@ -48,10 +44,8 @@ export default {
   },
 
   created() {
-    console.log(this.order);
     if (this.is_ordenated === true) {
       this.$api.get("orders/" + this.order_id + "/ordenated").then(res => {
-        console.log(this.order_id);
         this.products = res.data;
       });
     } else {

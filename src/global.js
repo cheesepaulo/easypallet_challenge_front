@@ -1,11 +1,15 @@
 import Vue from 'vue'
 
 export function showError(e) {
-  if (e && e.response && e.response.data) {
+  const hasMultipleErrors = Object.prototype.hasOwnProperty.call(e.response.data, "errors");
+  if (e && e.response && e.response.data && hasMultipleErrors) {
     e.response.data["errors"].forEach(function (error) {
       Vue.toasted.global.defaultError({ msg: error })
-    });
-  } else {
+    })
+  } else if (typeof e.response.data === 'string') {
+    Vue.toasted.global.defaultError({ msg: e.response.data })
+  }
+  else {
     Vue.toasted.defaultError()
   }
 }

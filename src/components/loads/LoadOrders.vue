@@ -7,36 +7,55 @@
     />
 
     <v-data-table hide-default-footer disable-pagination :items="orders" :headers="headers">
+      <template v-slot:item.organized="{ item }">
+        <v-chip v-if="item.organized" class="ma-2" color="green" text-color="white">
+          <v-icon right>mdi-checkbox-marked-circle</v-icon>
+        </v-chip>
+        <v-tooltip v-else left color="success">
+          <template v-slot:activator="{ on }">
+            <v-chip
+              @click="organizeOrder(item.id)"
+              v-on="on"
+              class="ma-2"
+              color="grey"
+              text-color="white"
+            >
+              <v-icon left>mdi-checkbox-blank-circle</v-icon>
+            </v-chip>
+          </template>
+          <span>Clique para organizar</span>
+        </v-tooltip>
+      </template>
+
       <template v-slot:item.actions="{ item }">
-        <v-btn
-          :to="{ name: 'orderProducts', params: { order_id: item.id, is_ordenated: false, order: item} }"
-        >
-          <v-icon left>mdi-sort-variant-remove</v-icon>Listar Produtos
-        </v-btn>
-        <template v-if="item.organized === true">
-          <v-chip
-            :to="{ name: 'orderProducts', params: { order_id: item.id, is_ordenated: true, order: item} }"
-            class="ma-2"
-            color="green"
-            text-color="white"
-          >
-            <v-icon class="mr-2">mdi-sort-descending</v-icon>List Organized Products
-          </v-chip>
-        </template>
-        <template v-else>
-          <v-btn text @click="organizeOrder(item.id)">
-            <v-icon class="mr-2">mdi-sort-ascending</v-icon>Organize
-          </v-btn>
-        </template>
-        <!-- <v-btn icon :to="{ name: 'LoadOrders', params: { id: item.id, load: item } }">
-          <v-icon left>mdi-newspaper-variant-multiple</v-icon>
-        </v-btn>
-        <v-btn icon color="warning" @click="getLoad(item)">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn icon color="red" @click="confirmRemove(item)">
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>-->
+        <v-tooltip v-if="item.organized" left color="success">
+          <template v-slot:activator="{ on }">
+            <v-chip
+              v-on="on"
+              class="mr-2"
+              :to="{ name: 'orderProducts', params: { order_id: item.id, is_ordenated: true, order: item} }"
+              color="green"
+              text-color="white"
+            >
+              <v-icon>mdi-sort-reverse-variant</v-icon>
+            </v-chip>
+          </template>
+          <span>Produtos Organizados</span>
+        </v-tooltip>
+
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-chip
+              v-on="on"
+              class="mr-2"
+              :to="{ name: 'orderProducts', params: { order_id: item.id, is_ordenated: false, order: item} }"
+              text-color="white"
+            >
+              <v-icon>mdi-sort-variant</v-icon>
+            </v-chip>
+          </template>
+          <span>Produtos</span>
+        </v-tooltip>
       </template>
     </v-data-table>
   </v-container>
@@ -55,7 +74,8 @@ export default {
         { text: "Codigo da Ordem", value: "id" },
         { text: "Código da Gravata", value: "code" },
         { text: "Baia", value: "bay" },
-        { text: "Ações", value: "actions", sortable: false }
+        { text: "Status", value: "organized", sortable: true },
+        { text: "Produtos", value: "actions", sortable: false }
       ]
     };
   },

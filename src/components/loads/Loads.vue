@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pl-10 pr-10 pt-10">
+  <v-container fluid class="pl-10 pr-10 pt-5">
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
         <v-card-title
@@ -70,6 +70,7 @@ import { showError } from "@/global";
 Vue.use(DatetimePicker);
 
 export default {
+  name: "Loads",
   components: { PageTitle },
   data() {
     return {

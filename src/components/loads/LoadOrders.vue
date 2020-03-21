@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pl-10 pr-10 pt-10">
+  <v-container fluid class="pl-10 pr-10 pt-5">
     <PageTitle
       icon="mdi-package-variant-closed"
       :title="`Gravatas da carga: ${load.code}`"
@@ -110,6 +110,7 @@
 import PageTitle from "../layout/PageTitle";
 import { showError } from "@/global";
 export default {
+  name: "LoadOrders",
   components: { PageTitle },
   props: ["id"],
   data() {
@@ -120,7 +121,6 @@ export default {
       orders: [],
       load: [],
       headers: [
-        { text: "Codigo da Ordem", value: "id" },
         { text: "Código da Gravata", value: "code" },
         { text: "Baia", value: "bay" },
         { text: "Status", value: "organized", sortable: true },

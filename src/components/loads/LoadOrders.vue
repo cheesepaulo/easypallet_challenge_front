@@ -46,10 +46,11 @@
 import PageTitle from "../layout/PageTitle";
 export default {
   components: { PageTitle },
-  props: ["id", "load"],
+  props: ["id"],
   data() {
     return {
       orders: [],
+      load: [],
       headers: [
         { text: "Codigo da Ordem", value: "id" },
         { text: "Código da Gravata", value: "code" },
@@ -63,6 +64,7 @@ export default {
     getOrders() {
       this.$api.get(`loads/${this.id}`).then(res => {
         this.orders = res.data["orders"];
+        this.load = res.data;
       });
     },
 

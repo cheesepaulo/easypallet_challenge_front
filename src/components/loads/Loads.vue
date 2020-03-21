@@ -47,7 +47,7 @@
     <v-divider />
     <v-data-table hide-default-footer disable-pagination :items="loads" :headers="headers">
       <template v-slot:item.actions="{ item }">
-        <v-btn icon :to="{ name: 'loadOrders', params: { id: item.id, load: item } }">
+        <v-btn icon :to="{ name: 'loadOrders', params: { id: item.id } }">
           <v-icon left>mdi-newspaper-variant-multiple</v-icon>
         </v-btn>
         <v-btn icon color="warning" @click="getLoad(item)">

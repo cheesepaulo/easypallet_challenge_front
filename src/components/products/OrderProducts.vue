@@ -1,6 +1,15 @@
 <template>
   <v-container fluid class="mt-5 pl-5 pr-5">
-    <PageTitle icon="mdi-package-variant-closed" :title="`Produtos da gravata: ${order.code} `" />
+    <template v-if="is_ordenated">
+      <PageTitle
+        icon="mdi-package-variant-closed"
+        :title="`Produtos organizados da gravata: ${order.code} `"
+      />
+    </template>
+    <template v-else>
+      <PageTitle icon="mdi-package-variant-closed" :title="`Produtos da gravata: ${order.code} `" />
+    </template>
+
     <v-simple-table>
       <thead>
         <tr>

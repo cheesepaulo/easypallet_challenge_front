@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pl-10 pr-10 pt-10">
+  <v-container fluid class="pl-10 pr-10 pt-5">
     <PageTitle icon="mdi-package" title="Produtos" />
     <v-form ref="form">
       <v-row>
@@ -23,7 +23,7 @@
     <v-divider />
     <v-data-table hide-default-footer disable-pagination :items="products" :headers="headers">
       <template v-slot:item.actions="{ item }">
-        <v-btn icon color="warning" @click="getproduct(item)">
+        <v-btn icon color="warning" @click="getProduct(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
       </template>
@@ -52,13 +52,13 @@ export default {
   },
 
   methods: {
-    getproducts() {
+    getProducts() {
       this.$api.get("/products").then(res => {
         this.products = res.data;
       });
     },
 
-    getproduct(product) {
+    getProduct(product) {
       this.product = { ...product };
     },
 
@@ -73,25 +73,25 @@ export default {
           .put(`/products/${this.product.id}`, this.product)
           .then(() => {
             this.$toasted.global.defaultSuccess();
-            this.getproducts();
+            this.getProducts();
             this.reset();
           })
-          .catch(showError, this.getproducts());
+          .catch(showError, this.getProducts());
       } else {
         this.$api
           .post(`/products`, this.product)
           .then(() => {
             this.$toasted.global.defaultSuccess();
-            this.getproducts();
+            this.getProducts();
             this.reset();
           })
-          .catch(showError, this.getproducts());
+          .catch(showError, this.getProducts());
       }
     }
   },
 
   mounted() {
-    this.getproducts();
+    this.getProducts();
   }
 };
 </script>

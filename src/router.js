@@ -12,7 +12,7 @@ export default new Router({
   mode: 'history',
   routes: [
     { path: '/loads', component: Loads },
-    { path: '/loads/:id/orders', name: "loadOrders", component: LoadOrders, props: true },
+    { path: '/loads/:load_id/orders', name: "loadOrders", component: LoadOrders, props: true },
     { path: '/orders/:order_id/products', name: "orderProducts", component: OrderProducts, props: true },
     { path: '/products', component: Products },
   ]

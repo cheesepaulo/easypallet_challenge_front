@@ -112,14 +112,13 @@ import { showError } from "@/global";
 export default {
   name: "LoadOrders",
   components: { PageTitle },
-  props: ["id"],
+  props: ["load_id", "load"],
   data() {
     return {
       dialog: false,
       temp_order: {},
       order: { code: "", bay: "" },
       orders: [],
-      load: [],
       headers: [
         { text: "Código da Gravata", value: "code" },
         { text: "Baia", value: "bay" },
@@ -141,9 +140,11 @@ export default {
     },
 
     getOrders() {
-      this.$api.get(`loads/${this.id}`).then(res => {
-        this.orders = res.data["orders"];
-        this.load = res.data;
+      console.log(this.load_id);
+
+      this.$api.get(`loads/${this.load_id}/orders`).then(res => {
+        this.orders = res.data;
+        // this.load = res.data;
       });
     },
 

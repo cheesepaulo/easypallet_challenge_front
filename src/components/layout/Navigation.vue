@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar app>
+    <v-app-bar app dark>
       <v-app-bar-nav-icon @click="toogle()" class="grey--text" />
       <v-toolbar-title class="headline text-uppercase mr-4">
         <span>Easy Pallet</span>

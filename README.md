@@ -1,24 +1,22 @@
-# easy_pallet_challenge_front
+**Easy Pallet Challenge Frontend**
+===================
 
-## Project setup
-```
-yarn install
-```
+![node](https://img.shields.io/badge/Node-10.15.2-green.svg)
+![vue](https://img.shields.io/badge/VueJS-2.6.11-blue.svg)
+![docker](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)
 
-### Compiles and hot-reloads for development
+# Getting Started
 ```
-yarn start
-```
-
-### Compiles and minifies for production
-```
-yarn build
+  * docker-compose up --build
 ```
 
-### Lints and fixes files
+# Compiles and minifies for production
 ```
-yarn lint
+  * docker-compose run --rm web yarn build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Lints and fixes files
+```
+  * docker-compose run --rm web yarn lint
+```
+###### Made With <3 by @cheesepaulo

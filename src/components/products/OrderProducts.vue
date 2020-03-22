@@ -81,16 +81,18 @@
         </tr>
       </tbody>
     </v-simple-table>
+    <BackButton />
   </v-container>
 </template>
 
 <script>
+import BackButton from "../BackButton";
 import PageTitle from "../layout/PageTitle";
 import { showError } from "@/global";
 
 export default {
   name: "OrderProducts",
-  components: { PageTitle },
+  components: { PageTitle, BackButton },
   props: ["is_ordenated", "order"],
 
   data() {

@@ -19,7 +19,7 @@
     <v-form ref="form">
       <v-row>
         <input id="product-id" type="hidden" v-model="product.id" />
-        <v-col cols="12" md="3" lg="2" sm="12" xs="12">
+        <v-col cols="12" md="3" lg="3" sm="12" xs="12">
           <v-text-field v-model="product.label" label="Nome do produto" />
         </v-col>
         <v-col cols="12" md="3" lg="2" sm="12" xs="12">

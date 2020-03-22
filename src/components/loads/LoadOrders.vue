@@ -1,10 +1,6 @@
 <template>
   <v-container fluid class="pl-10 pr-10 pt-5">
-    <PageTitle
-      icon="mdi-package-variant-closed"
-      :title="`Gravatas da carga: ${load.code}`"
-      :subtitle="`Data da entrega: ${load.delivery_date}`"
-    />
+    <PageTitle icon="mdi-package-variant-closed" :title="`Gravatas da carga: ${load_id}`" />
 
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
@@ -29,13 +25,14 @@
         <v-col cols="12" md="3" lg="2" sm="12" xs="12">
           <v-text-field v-model="order.bay" label="Baia da Gravata" />
         </v-col>
-        <v-col cols="12" md="4" lg="3" sm="12" xs="12">
+        <v-col cols="12" md="4" lg="5" sm="12" xs="12">
           <v-btn class="mr-4 primary mt-4" @click="save()">
             <v-icon left>mdi-content-save</v-icon>Salvar
           </v-btn>
           <v-btn class="mr-4 default mt-4" @click="reset()">
             <v-icon left>mdi-close</v-icon>Limpar
           </v-btn>
+          <BackButton />
         </v-col>
       </v-row>
     </v-form>
@@ -109,9 +106,10 @@
 <script>
 import PageTitle from "../layout/PageTitle";
 import { showError } from "@/global";
+import BackButton from "../BackButton";
 export default {
   name: "LoadOrders",
-  components: { PageTitle },
+  components: { PageTitle, BackButton },
   props: ["load_id", "load"],
   data() {
     return {

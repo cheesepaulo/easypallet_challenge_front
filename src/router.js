@@ -11,6 +11,7 @@ import OrderProducts from './components/products/OrderProducts'
 export default new Router({
   mode: 'history',
   routes: [
+    { path: '/', component: Loads },
     { path: '/loads', component: Loads },
     { path: '/loads/:load_id/orders', name: "loadOrders", component: LoadOrders, props: true },
     { path: '/orders/:order_id/products', name: "orderProducts", component: OrderProducts, props: true },

@@ -1,10 +1,12 @@
 <template>
   <v-container fluid class="pl-10 pr-10 pt-5">
+    <PageTitle icon="mdi-package" title="Produtos" />
+
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
         <v-card-title
           class="headline"
-        >Tem certeza que deseja excluir a carga: {{ temp_load.code }} ?</v-card-title>
+        >Tem certeza que deseja excluir o produto: {{ product_to_remove.label }} ?</v-card-title>
         <v-card-text>Esta ação é irreversível!</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -13,26 +15,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <PageTitle icon="mdi-package" title="Cargas" />
+
     <v-form ref="form">
       <v-row>
-        <input id="load-id" type="hidden" v-model="load.id" />
+        <input id="product-id" type="hidden" v-model="product.id" />
         <v-col cols="12" md="3" lg="2" sm="12" xs="12">
-          <v-text-field v-model="load.code" label="Codigo" />
+          <v-text-field v-model="product.label" label="Nome do produto" />
         </v-col>
         <v-col cols="12" md="3" lg="2" sm="12" xs="12">
-          <v-datetime-picker
-            required
-            clearText="Limpar"
-            label="Data da entrega"
-            v-model="load.delivery_date"
-            dateFormat="dd/MM/yyyy"
-            timeFormat="HH:mm"
-            format="24hr"
-          >
-            <v-icon slot="dateIcon">mdi-calendar-range</v-icon>
-            <v-icon slot="timeIcon">mdi-clock</v-icon>
-          </v-datetime-picker>
+          <v-text-field v-model="product.ballast" label="Lastro do produto" />
         </v-col>
         <v-col cols="12" md="4" lg="3" sm="12" xs="12">
           <v-btn class="mr-4 primary mt-4" @click="save()">
@@ -45,12 +36,9 @@
       </v-row>
     </v-form>
     <v-divider />
-    <v-data-table hide-default-footer disable-pagination :items="loads" :headers="headers">
+    <v-data-table hide-default-footer disable-pagination :items="products" :headers="headers">
       <template v-slot:item.actions="{ item }">
-        <v-btn icon :to="{ name: 'loadOrders', params: { load_id: item.id, load: item } }">
-          <v-icon left>mdi-newspaper-variant-multiple</v-icon>
-        </v-btn>
-        <v-btn icon color="warning" @click="getLoad(item)">
+        <v-btn icon color="warning" @click="getProduct(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
         <v-btn icon color="red" @click="confirmRemove(item)">
@@ -62,93 +50,87 @@
 </template>
 
 <script>
-import Vue from "vue";
-import DatetimePicker from "vuetify-datetime-picker";
 import PageTitle from "../layout/PageTitle";
 import { showError } from "@/global";
 
-Vue.use(DatetimePicker);
-
 export default {
-  name: "Loads",
   components: { PageTitle },
   data() {
     return {
       dialog: false,
-      temp_load: {},
-      load: { code: "", delivery_date: "" },
-      loads: [],
+      product_to_remove: {},
+      product: { label: "", ballast: "" },
+      products: [],
       headers: [
-        { text: "ID", value: "id" },
-        { text: "Código", value: "code" },
-        { text: "Data de Entrega", value: "delivery_date" },
+        { text: "Nome", value: "label" },
+        { text: "Lastro", value: "ballast" },
         { text: "Ações", value: "actions", sortable: false }
       ]
     };
   },
 
   methods: {
-    getLoads() {
-      this.$api.get("/loads").then(res => {
-        this.loads = res.data;
+    getProducts() {
+      this.$api.get("/products").then(res => {
+        this.products = res.data;
       });
     },
 
-    getLoad(load) {
-      this.load = { ...load };
+    getProduct(product) {
+      this.product = { ...product };
     },
 
     reset() {
       this.$refs.form.reset();
-      this.load = { code: "", delivery_date: "" };
+      this.product = { label: "", ballast: "" };
     },
 
     save() {
-      if (this.load.id) {
+      if (this.product.id) {
         this.$api
-          .put(`/loads/${this.load.id}`, this.load)
+          .put(`/products/${this.product.id}`, this.product)
           .then(() => {
             this.$toasted.global.defaultSuccess();
-            this.getLoads();
+            this.getProducts();
             this.reset();
           })
-          .catch(showError, this.getLoads());
+          .catch(showError, this.getProducts());
       } else {
         this.$api
-          .post(`/loads`, this.load)
+          .post(`/products`, this.product)
           .then(() => {
             this.$toasted.global.defaultSuccess();
-            this.getLoads();
+            this.getProducts();
             this.reset();
           })
-          .catch(showError, this.getLoads());
+          .catch(showError, this.getProducts());
       }
     },
 
     remove() {
       this.dialog = false;
       this.$api
-        .delete(`/loads/${this.temp_load.id}`)
+        .delete(`/products/${this.product_to_remove.id}`)
         .then(() => {
           this.$toasted.global.defaultSuccess();
-          this.getLoads();
+          this.getProducts();
         })
         .catch(showError);
     },
 
     confirmRemove(item) {
       this.dialog = true;
-      this.temp_load = { ...item };
+      this.product_to_remove = { ...item };
     }
   },
 
   mounted() {
-    this.getLoads();
+    this.getProducts();
   }
 };
 </script>
 
-<style>
+<style scoped>
 tbody tr:nth-of-type(even) {
   background-color: #fff;
 }

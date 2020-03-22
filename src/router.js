@@ -4,14 +4,16 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Loads from './components/loads/Loads'
-import Load from './components/loads/Load'
-import Products from './components/orders/Products'
+import LoadOrders from './components/loads/LoadOrders'
+import Products from './components/products/Products'
+import OrderProducts from './components/products/OrderProducts'
 
 export default new Router({
   mode: 'history',
   routes: [
     { path: '/loads', component: Loads },
-    { path: '/loads/:id', component: Load, props: true },
-    { path: '/orders/:order_id/products', name: "order_products", component: Products, props: true }
+    { path: '/loads/:load_id/orders', name: "loadOrders", component: LoadOrders, props: true },
+    { path: '/orders/:order_id/products', name: "orderProducts", component: OrderProducts, props: true },
+    { path: '/products', component: Products },
   ]
 })

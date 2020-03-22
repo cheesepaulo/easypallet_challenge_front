@@ -1,0 +1,11 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    command: sh -c "yarn install && yarn start"
+    volumes:
+      - ".:/easy_pallet_challenge_frontend"
+    environment:
+      HOST: 0.0.0.0

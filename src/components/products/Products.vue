@@ -1,6 +1,21 @@
 <template>
   <v-container fluid class="pl-10 pr-10 pt-5">
     <PageTitle icon="mdi-package" title="Produtos" />
+
+    <v-dialog v-model="dialog" max-width="600">
+      <v-card>
+        <v-card-title
+          class="headline"
+        >Tem certeza que deseja excluir o produto: {{ product_to_remove.label }} ?</v-card-title>
+        <v-card-text>Esta ação é irreversível!</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="dialog = false">Cancelar</v-btn>
+          <v-btn color="red" @click="remove()">Sim eu concordo!</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-form ref="form">
       <v-row>
         <input id="product-id" type="hidden" v-model="product.id" />
@@ -26,6 +41,9 @@
         <v-btn icon color="warning" @click="getProduct(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
+        <v-btn icon color="red" @click="confirmRemove(item)">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </template>
     </v-data-table>
   </v-container>
@@ -40,7 +58,7 @@ export default {
   data() {
     return {
       dialog: false,
-      temp_product: {},
+      product_to_remove: {},
       product: { label: "", ballast: "" },
       products: [],
       headers: [
@@ -87,6 +105,22 @@ export default {
           })
           .catch(showError, this.getProducts());
       }
+    },
+
+    remove() {
+      this.dialog = false;
+      this.$api
+        .delete(`/products/${this.product_to_remove.id}`)
+        .then(() => {
+          this.$toasted.global.defaultSuccess();
+          this.getProducts();
+        })
+        .catch(showError);
+    },
+
+    confirmRemove(item) {
+      this.dialog = true;
+      this.product_to_remove = { ...item };
     }
   },
 
